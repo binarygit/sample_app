@@ -15,5 +15,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should get show" do
     get user_path(@user)
     assert_response :success
+    assert_select 'title', "#{ @user.name } | #{ @base_title }"
   end
 end
