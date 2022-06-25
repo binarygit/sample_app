@@ -31,6 +31,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     assert_template 'users/show'
-    assert_select '.alert.alert-success'
+    assert_not flash.empty?
   end
 end
