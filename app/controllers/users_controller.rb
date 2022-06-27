@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = "Welcome to the sample app!"
+      login @user
       redirect_to @user
     else
       render :new, status: :unprocessable_entity

@@ -1,7 +1,7 @@
 require "test_helper"
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
-  test "Error Messages are displayed when sign up attempt is unsuccessful" do
+  test "invalid signup information" do
     get signup_path
     assert_response :success
 
@@ -13,7 +13,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select '#error_explanation'
   end
 
-  test "New user is created when sign up attemt is successful" do
+  test "valid signup information" do
     get signup_path
     assert_response :success
 
@@ -32,5 +32,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_template 'users/show'
     assert_not flash.empty?
+    assert is_logged_in?
   end
 end
