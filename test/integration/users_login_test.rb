@@ -6,14 +6,14 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:avi)
   end
 
-  test 'Error message is displayed when login attempt is unsuccessful' do
+  test 'login with invalid credentials' do
     get login_path
     assert_template 'sessions/new'
 
     post login_path, params: {
                        session: {
-                         email: 'avi@avi.com',
-                         password: 'avi'
+                         email: '',
+                         password: ''
                        }
                      }
     assert_response :unprocessable_entity
@@ -21,7 +21,22 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert flash.any?
   end
 
-  test 'User is redirected to users#show page when login attempt is successful' do
+  test 'login with valid email/invalid password' do
+    get login_path
+    assert_template 'sessions/new'
+
+    post login_path, params: {
+                       session: {
+                         email: 'avi@avi.com',
+                         password: ''
+                       }
+                     }
+    assert_response :unprocessable_entity
+    assert_template 'sessions/new'
+    assert flash.any?
+  end
+
+  test 'login with valid credentials' do
     get login_path
     assert_template 'sessions/new'
 
@@ -35,5 +50,8 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_equal @user.id, session[:user_id]
     assert_template 'users/show'
+    assert_select 'a[href=?]', login_path, count: 0
+    assert_select 'a[href=?]', logout_path
+    assert_select 'a[href=?]', user_path(@user)
   end
 end
