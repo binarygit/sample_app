@@ -3,7 +3,7 @@ require "test_helper"
 class UsersLoginTest < ActionDispatch::IntegrationTest
 
   def setup
-    @user = User.create!(name: 'avi', email: 'avi@avi.com', password: 'foobar')
+    @user = users(:avi)
   end
 
   test 'Error message is displayed when login attempt is unsuccessful' do

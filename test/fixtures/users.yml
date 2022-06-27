@@ -1,0 +1,4 @@
+avi:
+  name: avi
+  email: avi@avi.com
+  password_digest: <%= User.digest('foobar') %>

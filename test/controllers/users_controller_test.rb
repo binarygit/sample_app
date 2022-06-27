@@ -3,7 +3,7 @@ require "test_helper"
 class UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @base_title = "Ruby on Rails Tutorial Sample App"
-    @user = User.create!(name: 'Avi', email: 'avi@avi.com', password: 'foobar', password_confirmation: 'foobar')
+    @user = users(:avi)
   end
 
   test "should get new" do
